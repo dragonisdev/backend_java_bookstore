@@ -12,12 +12,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import fi.haagahelia.bookstore.domain.Book;
 import fi.haagahelia.bookstore.domain.BookRepository;
+import fi.haagahelia.bookstore.domain.CategoryRepository;
 
 @Controller
 public class BookController {
 
-    @Autowired
     private BookRepository bookRepository;
+    private CategoryRepository categoryRepository;
+
+    public BookController(BookRepository bookRepository, CategoryRepository categoryRepository) {
+        this.bookRepository = bookRepository;
+        this.categoryRepository = categoryRepository;
+    }
 
     // index page, aka landing page
     @GetMapping("/index")
@@ -37,7 +43,9 @@ public class BookController {
 
     //addbook page
     @GetMapping("/addbook")
-    public String addBookForm() {
+    public String addBookForm(Model model) {
+        model.addAttribute("book", new Book());
+        model.addAttribute("categories", categoryRepository.findAll());
         return "addbook";
     }
 
@@ -46,12 +54,8 @@ public class BookController {
     we create a new book based on Book class, and push to bookRepository
     which saves to database */
 
-    //sidenote: gosh I hate this syntax, its so verbose to use @requestparam
     @PostMapping("/addbook")
-    public String addBook(@RequestParam String title, @RequestParam String author, 
-                          @RequestParam int publicationYear, @RequestParam String isbn, 
-                          @RequestParam BigDecimal price) {
-        Book book = new Book(title, author, publicationYear, isbn, price);
+    public String addBook(Book book) {
         bookRepository.save(book);
         return "redirect:/booklist";
     }
@@ -70,6 +74,7 @@ public class BookController {
     public String editBookForm(@PathVariable Long id, Model model) {
         Book book = bookRepository.findById(id).orElseThrow();
         model.addAttribute("book", book);
+        model.addAttribute("categories", categoryRepository.findAll());
         return "editbook";
     }
 
@@ -79,17 +84,18 @@ public class BookController {
     with row 2 contents*/
     
     @PostMapping("/edit/{id}")
-    public String editBook(@PathVariable Long id, @RequestParam String title, 
-                           @RequestParam String author, @RequestParam int publicationYear, 
-                           @RequestParam String isbn, @RequestParam BigDecimal price) {
-        Book book = bookRepository.findById(id).orElseThrow();
-        book.setTitle(title);
-        book.setAuthor(author);
-        book.setPublicationYear(publicationYear);
-        book.setIsbn(isbn);
-        book.setPrice(price);
+    public String editBook(@PathVariable Long id, Book book) {
+        Book realBook = bookRepository.findById(id).orElseThrow();
+        realBook.setTitle(book.getTitle());
+        realBook.setAuthor(book.getAuthor());
+        realBook.setPublicationYear(book.getPublicationYear());
+        realBook.setIsbn(book.getIsbn());
+        realBook.setPrice(book.getPrice());
+        realBook.setCategory(book.getCategory());
         bookRepository.save(book);
         return "redirect:/booklist";
     }
+
+
 }
 

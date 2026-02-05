@@ -10,6 +10,8 @@ import org.springframework.context.annotation.Bean;
 
 import fi.haagahelia.bookstore.domain.Book;
 import fi.haagahelia.bookstore.domain.BookRepository;
+import fi.haagahelia.bookstore.domain.Category;
+import fi.haagahelia.bookstore.domain.CategoryRepository;
 
 
 
@@ -24,11 +26,15 @@ public class BookstoreApplication {
 
 	//creates database entries into database
 	@Bean
-	public CommandLineRunner CommandLineShit(BookRepository repository){
-		  return args -> {
-            repository.save(new Book("The Great Gatsby", "F. Scott Fitzgerald", 1925, "9780743273565", new BigDecimal("10.99")));
-            repository.save(new Book("To Kill a Mockingbird", "Harper Lee", 1960, "9780061120084", new BigDecimal("7.99")));
-            repository.save(new Book("1984", "George Orwell", 1949, "9780451524935", new BigDecimal("9.99")));
+	public CommandLineRunner CommandLineShit(BookRepository bookRepository, CategoryRepository categoryRepository){
+		return args -> {
+            categoryRepository.save(new Category("Horror"));
+            categoryRepository.save(new Category("Thriller"));
+            categoryRepository.save(new Category("Scifi"));
+
+            bookRepository.save(new Book("The Great Gatsby", "F. Scott Fitzgerald", 1925, "9780743273565", new BigDecimal("10.99"), "Horror"));
+            bookRepository.save(new Book("To Kill a Mockingbird", "Harper Lee", 1960, "9780061120084", new BigDecimal("7.99"), null));
+            bookRepository.save(new Book("1984", "George Orwell", 1949, "9780451524935", new BigDecimal("9.99"), null));
         };
 		
 	}

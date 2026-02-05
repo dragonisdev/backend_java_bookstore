@@ -2,10 +2,7 @@ package fi.haagahelia.bookstore.domain;
 
 import java.math.BigDecimal;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 
 //Table called Book due to @entity
@@ -21,14 +18,20 @@ public class Book {
     private String isbn;
     private BigDecimal price;
 
+    @ManyToOne 
+    @JoinColumn(name = "category_id")
+    private Category category;
+
     public Book() {}
 
-    public Book(String title, String author, int publicationYear, String isbn, BigDecimal price){
+    //need to remember to include category in this model now as well
+    public Book(String title, String author, int publicationYear, String isbn, BigDecimal price, Category category){
         this.title = title;
         this.author = author;
         this.publicationYear = publicationYear;
         this.isbn = isbn;
         this.price = price;
+        this.category = category;
     }
 
     public Long getId() {
@@ -66,6 +69,13 @@ public class Book {
     }
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public Category getCategory() {  // <-- ADD GETTER for category 
+        return category;
+    }
+    public void setCategory(Category category) {  // <-- ADD SETTER for category
+        this.category = category;
     }
 
 
