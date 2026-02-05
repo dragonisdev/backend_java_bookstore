@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 @Entity
 public class Category {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
     private String name;
 
