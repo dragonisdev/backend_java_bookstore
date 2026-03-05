@@ -13,3 +13,11 @@ CREATE TABLE book (
     category_id BIGINT,
     FOREIGN KEY (category_id) REFERENCES category(id)
 );
+
+CREATE TABLE users (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    email VARCHAR(255),
+    role VARCHAR(55) NOT NULL
+);

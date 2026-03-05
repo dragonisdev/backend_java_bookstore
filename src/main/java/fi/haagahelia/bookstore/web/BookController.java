@@ -2,13 +2,12 @@ package fi.haagahelia.bookstore.web;
 
 import java.math.BigDecimal;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import fi.haagahelia.bookstore.domain.Book;
 import fi.haagahelia.bookstore.domain.BookRepository;
@@ -25,10 +24,14 @@ public class BookController {
         this.categoryRepository = categoryRepository;
     }
 
+    @GetMapping("/login")
+    public String login() {
+        return "login";
+    }
+
     // index page, aka landing page
     @GetMapping("/index")
     public String index(Model model) {
-        
         return "index";
     }
 
@@ -60,9 +63,8 @@ public class BookController {
         return "redirect:/booklist";
     }
 
-    /* We delete book based on its id, since JPA 
-    automatically creates id incrementally without us needing
-    to specify it while creating the rows */
+    /* Only ADMIN role can delete books */
+    @Secured("ROLE_ADMIN")
     @GetMapping("/delete/{id}")
     public String deleteBook(@PathVariable Long id) {
         bookRepository.deleteById(id);

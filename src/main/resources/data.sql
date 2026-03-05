@@ -9,3 +9,8 @@ INSERT INTO book (title, author, publication_year, isbn, price, category_id) VAL
 ('To Kill a Mockingbird', 'Harper Lee', 1960, '978-0-06-112008-4', 12.99, 1),
 ('Sapiens', 'Yuval Noah Harari', 2011, '978-0-06-231609-7', 15.99, 2),
 ('Dune', 'Frank Herbert', 1965, '978-0-441-17271-9', 14.99, 3);
+
+-- Insert sample users (passwords are BCrypt hashed)
+INSERT INTO users (username, password, email, role) VALUES
+('user', '$2a$12$Vfs7Qwvju3fFe.1VrPN77uZRCLqBZfNFyNLA/8n2szzw4r0uw5FJ2', 'user@bookstore.com', 'USER'),
+('admin', '$2a$12$pwmBv.KHuFzf6r4eVoYTGetDTq4v4GK3w07sPS02nBmlr76nb4B.W', 'admin@bookstore.com', 'ADMIN');
