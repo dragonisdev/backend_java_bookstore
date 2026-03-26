@@ -11,8 +11,9 @@ public class Category {
     private Long Id;
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "category", fetch = FetchType.LAZY)
     @JsonIgnore
+    @Basic(fetch = FetchType.LAZY)
     private List<Book> books;
 
     public Category() {}

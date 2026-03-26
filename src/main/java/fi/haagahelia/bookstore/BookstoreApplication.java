@@ -19,6 +19,12 @@ public class BookstoreApplication {
 		// Set web application type explicitly (saves memory)
 		app.setWebApplicationType(org.springframework.boot.WebApplicationType.SERVLET);
 		
+		// Disable banner to save memory
+		app.setBannerMode(org.springframework.boot.Banner.Mode.OFF);
+		
+		// Set lazy initialization globally
+		System.setProperty("spring.main.lazy-initialization", "true");
+		
 		// Run with optimizations
 		app.run(args);
 	}
