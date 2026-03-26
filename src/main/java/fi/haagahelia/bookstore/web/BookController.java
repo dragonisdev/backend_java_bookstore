@@ -94,7 +94,7 @@ public class BookController {
         realBook.setIsbn(book.getIsbn());
         realBook.setPrice(book.getPrice());
         realBook.setCategory(book.getCategory());
-        bookRepository.save(book);
+        bookRepository.save(realBook); // Fixed: save realBook not book
         return "redirect:/booklist";
     }
 
