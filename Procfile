@@ -1,1 +1,1 @@
-web: java -Xmx256m -Xms128m -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:+UseStringDeduplication -XX:+OptimizeStringConcat -XX:+UseCompressedOops -XX:+UseCompressedClassPointers -jar target/homework3-0.0.1-SNAPSHOT.jar --spring.profiles.active=prod
+web: java -Xmx192m -Xms96m -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:+UseStringDeduplication -XX:+OptimizeStringConcat -XX:+UseCompressedOops -XX:+UseCompressedClassPointers -XX:+UnlockExperimentalVMOptions -XX:+UseTransparentHugePages -XX:MaxRAMPercentage=75.0 -jar target/homework3-0.0.1-SNAPSHOT.jar --spring.profiles.active=prod
